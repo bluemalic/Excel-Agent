@@ -1,0 +1,7 @@
+{
+ "n_rows": 100000,
+ "warm_up_s": 29.1,
+ "query_elapsed_s": 5.2,
+ "pass": true,
+ "question": "各大区的销售额总和分别是多少？"
+}

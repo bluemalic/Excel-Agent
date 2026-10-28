@@ -1,0 +1,16 @@
+template_id: sales_monthly
+name: 月度销售台账
+description: 按月记录各大区销售数据，适合占比/趋势/同比分析
+sheets:
+  - name: 明细
+    columns:
+      - {name: 日期,   type: date,    required: true}
+      - {name: 大区,   type: enum,    values: [华东, 华南, 华北, 西南], required: true}
+      - {name: 产品,   type: string,  required: true}
+      - {name: 销售额, type: decimal, min: 0}
+      - {name: 数量,   type: int,     min: 0}
+      - {name: 负责人, type: string}
+    presets:
+      - "各大区销售额占比"
+      - "月度销售趋势"
+      - "Top5 产品排名"

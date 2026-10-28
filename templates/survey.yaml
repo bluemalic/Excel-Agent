@@ -1,0 +1,15 @@
+template_id: survey
+name: 问卷结果表
+description: 满意度调研数据，适合满意度分布/交叉分析
+sheets:
+  - name: 问卷结果
+    columns:
+      - {name: 问卷编号, type: string, required: true}
+      - {name: 提交时间, type: datetime}
+      - {name: 年龄段,   type: enum, values: ["18-25", "26-35", "36-45", "46岁及以上"]}
+      - {name: 渠道,     type: enum, values: [小程序, 公众号, 线下扫码]}
+      - {name: 满意度,   type: int, min: 1, max: 5}
+      - {name: 建议,     type: text}
+    presets:
+      - "满意度分布"
+      - "各渠道满意度对比"

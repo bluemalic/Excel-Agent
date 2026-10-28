@@ -1,0 +1,28 @@
+# 密钥与本地配置 —— 绝不提交
+.env
+.env.*
+!.env.example
+
+# 运行时数据与本地工具目录
+data/
+.tmp/
+.v2c/
+.zcode/
+tools/
+*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 评测中间产物（report.md、results_*.json、perf_result.json 保留）
+eval/checkpoints/
+
+# 原始录屏体积较大，保留本地；成片 recordings/excel_agent_demo.mp4 入库
+recordings/raw/
+
+# 系统杂项
+.DS_Store
+Thumbs.db

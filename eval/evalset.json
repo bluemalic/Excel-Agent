@@ -1,0 +1,338 @@
+{
+  "version": "1.0",
+  "description": "Excel 对话式数据分析智能体 · 30 题评测集（单轮查询10 / 多轮指代6 / 修改类6 / 总结成文4 / 陷阱4）",
+  "datasets": {
+    "sales": "samples/sales_orders.xlsx",
+    "attendance": "samples/employee_attendance.xlsx",
+    "survey": "samples/survey.csv"
+  },
+  "items": [
+    {
+      "id": "s1",
+      "category": "single",
+      "dataset": "sales",
+      "question": "全年总销售额是多少？",
+      "expect": {
+        "ref_sql": "SELECT ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\""
+      }
+    },
+    {
+      "id": "s2",
+      "category": "single",
+      "dataset": "sales",
+      "question": "各大区销售额总和分别是多少？按从高到低排列。",
+      "expect": {
+        "ref_sql": "SELECT \"大区\", ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" GROUP BY \"大区\" ORDER BY v DESC",
+        "keywords": [
+          "华东"
+        ]
+      }
+    },
+    {
+      "id": "s3",
+      "category": "single",
+      "dataset": "sales",
+      "question": "销售额最高的产品是哪一个？",
+      "expect": {
+        "ref_sql": "SELECT \"产品\" AS v FROM \"订单明细\" GROUP BY \"产品\" ORDER BY SUM(\"销售额\") DESC LIMIT 1",
+        "golden_kind": "keyword"
+      }
+    },
+    {
+      "id": "s4",
+      "category": "single",
+      "dataset": "sales",
+      "question": "华东区一共有多少笔订单？（按订单ID去重计数）",
+      "expect": {
+        "ref_sql": "SELECT COUNT(DISTINCT \"订单ID\") AS v FROM \"订单明细\" WHERE \"大区\" = '华东'"
+      }
+    },
+    {
+      "id": "s5",
+      "category": "single",
+      "dataset": "sales",
+      "question": "订单明细中，销售额的平均值是多少？（按明细行计算，缺失值不计入）",
+      "expect": {
+        "ref_sql": "SELECT ROUND(AVG(\"销售额\"), 2) AS v FROM \"订单明细\""
+      }
+    },
+    {
+      "id": "s6",
+      "category": "single",
+      "dataset": "sales",
+      "question": "线上商城渠道的销售额占总销售额的比例是多少？（百分比，保留一位小数）",
+      "expect": {
+        "ref_sql": "SELECT ROUND(SUM(CASE WHEN \"渠道\" = '线上商城' THEN \"销售额\" ELSE 0 END) / SUM(\"销售额\") * 100, 1) AS v FROM \"订单明细\""
+      }
+    },
+    {
+      "id": "s7",
+      "category": "single",
+      "dataset": "sales",
+      "question": "按月汇总销售额，最高的三个月份分别是哪几个月？",
+      "expect": {
+        "ref_sql": "SELECT strftime(\"日期\", '%Y-%m') AS v, ROUND(SUM(\"销售额\"), 2) AS s FROM \"订单明细\" GROUP BY v ORDER BY s DESC LIMIT 3",
+        "golden_kind": "keyword"
+      }
+    },
+    {
+      "id": "s8",
+      "category": "single",
+      "dataset": "sales",
+      "question": "数量最多的一笔订单是哪个订单ID？",
+      "expect": {
+        "ref_sql": "SELECT \"订单ID\" AS v FROM \"订单明细\" ORDER BY \"数量\" DESC LIMIT 1",
+        "golden_kind": "keyword"
+      }
+    },
+    {
+      "id": "s9",
+      "category": "single",
+      "dataset": "sales",
+      "question": "华北地区都有哪些城市产生了销售？",
+      "expect": {
+        "ref_sql": "SELECT DISTINCT \"城市\" AS v FROM \"订单明细\" WHERE \"大区\" = '华北'",
+        "golden_kind": "keywords_all"
+      }
+    },
+    {
+      "id": "s10",
+      "category": "single",
+      "dataset": "sales",
+      "question": "智能手表Pro 和 无线耳机Air 这两个产品的销售额分别是多少？",
+      "expect": {
+        "ref_sql": "SELECT \"产品\", ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" WHERE \"产品\" IN ('智能手表Pro', '无线耳机Air') GROUP BY \"产品\"",
+        "keywords": [
+          "智能手表Pro",
+          "无线耳机Air"
+        ]
+      }
+    },
+    {
+      "id": "m1",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "各大区销售额总和是多少？",
+        "按从高到低排序",
+        "只看前两名的大区"
+      ],
+      "expect": {
+        "ref_sql": "SELECT \"大区\", ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" GROUP BY \"大区\" ORDER BY v DESC LIMIT 2"
+      }
+    },
+    {
+      "id": "m2",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "华东区每个月的销售额趋势是怎样的？",
+        "那华南呢？"
+      ],
+      "expect": {
+        "ref_sql": "SELECT strftime(\"日期\", '%Y-%m') AS m, ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" WHERE \"大区\" = '华南' GROUP BY m ORDER BY m"
+      }
+    },
+    {
+      "id": "m3",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "哪个负责人的销售总额最高？",
+        "他卖得最好的产品是什么？"
+      ],
+      "expect": {
+        "ref_sql": "SELECT \"产品\" AS v FROM \"订单明细\" WHERE \"负责人\" = (SELECT \"负责人\" FROM \"订单明细\" GROUP BY \"负责人\" ORDER BY SUM(\"销售额\") DESC LIMIT 1) GROUP BY \"产品\" ORDER BY SUM(\"销售额\") DESC LIMIT 1",
+        "golden_kind": "keyword"
+      }
+    },
+    {
+      "id": "m4",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "整体客单价（平均每单销售额）是多少？",
+        "按大区分别拆一下客单价"
+      ],
+      "expect": {
+        "ref_sql": "SELECT \"大区\", ROUND(AVG(\"销售额\"), 2) AS v FROM \"订单明细\" GROUP BY \"大区\""
+      }
+    },
+    {
+      "id": "m5",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "2024年5月华东的销售额是多少？",
+        "比4月环比变化了百分之多少？"
+      ],
+      "expect": {
+        "ref_sql": "WITH t AS (SELECT strftime(\"日期\", '%Y-%m') AS m, ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" WHERE \"大区\" = '华东' GROUP BY m) SELECT ROUND((SELECT v FROM t WHERE m='2024-05') / (SELECT v FROM t WHERE m='2024-04') * 100 - 100, 1) AS v"
+      }
+    },
+    {
+      "id": "m6",
+      "category": "multi",
+      "dataset": "sales",
+      "turns": [
+        "各产品的销售额占比是多少？",
+        "画成饼图",
+        "把图换成柱状图"
+      ],
+      "expect": {
+        "ref_sql": "SELECT \"产品\", ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" GROUP BY \"产品\"",
+        "require_chart": true
+      }
+    },
+    {
+      "id": "w1",
+      "category": "write",
+      "dataset": "sales",
+      "question": "用均值填充「销售额」列的缺失值。",
+      "expect": {
+        "post_check": {
+          "type": "no_missing",
+          "column": "销售额"
+        }
+      }
+    },
+    {
+      "id": "w2",
+      "category": "write",
+      "dataset": "sales",
+      "question": "删除完全重复的订单行（整行都一样的重复数据）。",
+      "expect": {
+        "post_check": {
+          "type": "row_count",
+          "golden": "dedup_full_row"
+        }
+      }
+    },
+    {
+      "id": "w3",
+      "category": "write",
+      "dataset": "sales",
+      "question": "把「折扣率」列从文本转换为数值类型。",
+      "expect": {
+        "post_check": {
+          "type": "column_dtype",
+          "column": "折扣率",
+          "dtype": "float"
+        }
+      }
+    },
+    {
+      "id": "w4",
+      "category": "write",
+      "dataset": "sales",
+      "question": "新增一列「金额校验」，值等于 销售额 减去 数量乘以单价。",
+      "expect": {
+        "post_check": {
+          "type": "derived_check",
+          "column": "金额校验",
+          "expr": "销售额 - 数量 * 单价"
+        }
+      }
+    },
+    {
+      "id": "w5",
+      "category": "write",
+      "dataset": "sales",
+      "question": "把第 1 行数据（表头下面第一行）的「负责人」改成「测试员」。",
+      "expect": {
+        "post_check": {
+          "type": "cell_value",
+          "row": 0,
+          "column": "负责人",
+          "value": "测试员"
+        }
+      }
+    },
+    {
+      "id": "w6",
+      "category": "write",
+      "dataset": "sales",
+      "question": "新建一个名叫「渠道分析」的空白工作表。",
+      "expect": {
+        "post_check": {
+          "type": "sheet_exists",
+          "sheet": "渠道分析"
+        }
+      }
+    },
+    {
+      "id": "r1",
+      "category": "summary",
+      "dataset": "sales",
+      "question": "帮我总结订单明细的整体情况，写一段 100-300 字的分析小结。",
+      "expect": {
+        "judge": "小结是否包含具体数字（总销售额/订单量等）、覆盖整体概况、长度在100-300字左右，且与给定数据一致"
+      }
+    },
+    {
+      "id": "r2",
+      "category": "summary",
+      "dataset": "sales",
+      "question": "帮我出一份月度经营小结：包括月度趋势和有没有异常月份。",
+      "expect": {
+        "judge": "小结是否给出月度趋势描述、指出异常月份（如3月骤降）、引用具体数字且与给定数据一致"
+      }
+    },
+    {
+      "id": "r3",
+      "category": "summary",
+      "dataset": "attendance",
+      "question": "分析这份考勤表，总结各部门的迟到情况，并给出管理建议。",
+      "expect": {
+        "judge": "小结是否按部门对比迟到情况、引用具体数字、给出合理建议，且与给定数据一致"
+      }
+    },
+    {
+      "id": "r4",
+      "category": "summary",
+      "dataset": "sales",
+      "question": "给华东区写一份销售分析报告，要有关键发现和建议。",
+      "expect": {
+        "ref_sql": "SELECT '华东销售额' AS k, ROUND(SUM(\"销售额\"), 2) AS v FROM \"订单明细\" WHERE \"大区\" = '华东' UNION ALL SELECT '华东订单数', COUNT(DISTINCT \"订单ID\") FROM \"订单明细\" WHERE \"大区\" = '华东' UNION ALL SELECT '华东占比%', ROUND(SUM(CASE WHEN \"大区\" = '华东' THEN \"销售额\" ELSE 0 END) / SUM(\"销售额\") * 100, 1) FROM \"订单明细\"",
+        "judge": "报告是否以华东区为范围、包含华东区关键指标（销售额/订单数/占比/趋势之一以上）、有发现和建议两部分、数字与参考数据一致"
+      }
+    },
+    {
+      "id": "t1",
+      "category": "trap",
+      "dataset": "sales",
+      "question": "客服满意度这一列的平均值是多少？",
+      "expect": {
+        "type": "clarify"
+      }
+    },
+    {
+      "id": "t2",
+      "category": "trap",
+      "dataset": "sales",
+      "question": "2023年12月的销售额是多少？",
+      "expect": {
+        "type": "clarify"
+      }
+    },
+    {
+      "id": "t3",
+      "category": "trap",
+      "dataset": "sales",
+      "question": "帮我精确预测 2025 年 1 月每一天的销售额，要精确到元。",
+      "expect": {
+        "type": "honest_uncertainty"
+      }
+    },
+    {
+      "id": "t4",
+      "category": "trap",
+      "dataset": "none",
+      "question": "这个表的平均值是多少？",
+      "expect": {
+        "type": "clarify",
+        "no_workbook": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+template_id: inventory
+name: 库存清单
+description: 商品库存与安全库存管理，适合缺货预警/周转分析
+sheets:
+  - name: 库存
+    columns:
+      - {name: 商品编码, type: string, required: true}
+      - {name: 商品名称, type: string, required: true}
+      - {name: 品类,     type: string}
+      - {name: 库存数量, type: int, min: 0}
+      - {name: 安全库存, type: int, min: 0}
+      - {name: 单价,     type: decimal, min: 0}
+    presets:
+      - "低于安全库存的商品清单"
+      - "各品类库存金额分布"

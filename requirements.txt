@@ -1,0 +1,42 @@
+# Excel 对话式数据分析智能体 · 依赖清单（版本已实测锁定，Python 3.11）
+# 安装：.venv/Scripts/python.exe -m pip install -r requirements.txt
+
+# --- Agent 编排 ---
+langgraph==1.2.17
+langgraph-supervisor==0.0.31
+langgraph-checkpoint-sqlite==3.1.2
+langchain==1.4.7
+langchain-core==1.7.0
+langchain-openai==1.7.2
+
+# --- 记忆层（自托管 Mem0；本地 HuggingFace embedding）---
+mem0ai==2.2.1
+sentence-transformers==6.2.0
+torch==2.14.1
+qdrant-client==1.20.0
+
+# --- MCP 协议 ---
+fastmcp==4.1.3
+
+# --- 数据与查询 ---
+pandas==3.1.0
+numpy==2.4.6
+duckdb==2.0.0
+pyarrow==26.0.0
+openpyxl==3.1.5
+xlrd==2.0.2
+sqlglot==30.24.0
+scipy==1.17.1
+
+# --- 图表与导出 ---
+matplotlib==3.11.2
+reportlab==5.1.0
+
+# --- 界面与服务 ---
+gradio==6.30.0
+python-dotenv==1.2.4
+PyYAML==6.0.3
+
+# --- 测试 ---
+pytest==9.1.1
+pytest-asyncio==1.4.0

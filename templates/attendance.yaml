@@ -1,0 +1,17 @@
+template_id: attendance
+name: 考勤表
+description: 记录员工每日打卡与迟到情况，适合出勤率/迟到分析
+sheets:
+  - name: 考勤记录
+    columns:
+      - {name: 工号,     type: string, required: true}
+      - {name: 姓名,     type: string, required: true}
+      - {name: 部门,     type: enum,   values: [销售部, 技术部, 人事部, 财务部]}
+      - {name: 日期,     type: date,   required: true}
+      - {name: 上班打卡, type: string}
+      - {name: 下班打卡, type: string}
+      - {name: 工时,     type: decimal, min: 0, max: 24}
+      - {name: 迟到分钟, type: int, min: 0}
+    presets:
+      - "各部门迟到次数对比"
+      - "月度平均工时趋势"
