@@ -22,13 +22,14 @@
 | 10 | [测试与评测](10-testing-eval.md) | 评审 / 开发者 | 52 个单测、30 题评测、消融实验、性能测试怎么跑、结果如何 |
 | 11 | [演示视频脚本](11-demo-script.md) | 剪辑 / 配音 | 2 分 25 秒成片的分镜、台词、字幕、TTS 指南 |
 | 12 | [项目管理](12-project-management.md) | 项目组 | 里程碑、风险、已知问题与规格偏差、路线图 |
+| 13 | [队友上手指南](13-team-onboarding.md) | 组员 | 部署、功能彩排、答辩话术、PPT 素材、视频分工 |
 
 ## 按角色的阅读路径
 
 - **第一次接触项目**：根 [README](../README.md) → [08 用户手册](08-user-guide.md) → 看 [演示视频](../recordings/excel_agent_demo.mp4)
 - **接手开发**：[02 架构](02-architecture.md) → [03 Agent 设计](03-agent-design.md) → [04 数据与存储](04-data-storage.md) → [10 测试与评测](10-testing-eval.md)
 - **准备答辩**：[01 需求与验收](01-requirements.md) → [03 Agent 设计](03-agent-design.md) → [07 记忆层](07-memory.md) → [10 测试与评测](10-testing-eval.md)（重点看消融与 AC-7 归因）
-- **部署演示环境**：[09 部署与运维](09-deployment-ops.md) → [11 演示脚本](11-demo-script.md)
+- **部署演示环境**：[09 部署与运维](09-deployment-ops.md) → [13 队友上手指南](13-team-onboarding.md) → [11 演示脚本](11-demo-script.md)
 - **通过 MCP 接入**：[05 工具与 MCP](05-tools-mcp.md)
 
 ## 文档约定

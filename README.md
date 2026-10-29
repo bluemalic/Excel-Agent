@@ -104,6 +104,7 @@ flowchart TB
 | [10 测试与评测](docs/10-testing-eval.md) | 52 个单测、30 题评测、性能 |
 | [11 演示视频脚本](docs/11-demo-script.md) | 分镜、台词、TTS/字幕指南 |
 | [12 项目管理](docs/12-project-management.md) | 里程碑、风险、已知问题、路线图 |
+| [13 队友上手指南](docs/13-team-onboarding.md) | 部署、功能彩排、答辩话术、PPT 素材、视频分工 |
 
 ## 降级与已知限制（摘要）
 
