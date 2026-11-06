@@ -1,5 +1,17 @@
 # Excel 对话式数据分析智能体
 
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)
+![LangGraph](https://img.shields.io/badge/LangGraph-1.2-1C3C3C?style=flat-square&logo=langgraph&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-1.4-1C3C3C?style=flat-square&logo=langchain&logoColor=white)
+![DeepSeek](https://img.shields.io/badge/DeepSeek-LLM-4D6BFE?style=flat-square)
+![Gradio](https://img.shields.io/badge/Gradio-6.30-F97316?style=flat-square&logo=gradio&logoColor=white)
+![DuckDB](https://img.shields.io/badge/DuckDB-2.0-FFF000?style=flat-square&logo=duckdb&logoColor=black)
+![pandas](https://img.shields.io/badge/pandas-3.1-150458?style=flat-square&logo=pandas&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.11-11557C?style=flat-square)
+![FastMCP](https://img.shields.io/badge/FastMCP-4.1-2C2C2C?style=flat-square)
+![Mem0](https://img.shields.io/badge/Mem0-2.2-6C4AE2?style=flat-square)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
+
 上传或选择一份表格，用中文对话完成「**看清数据 → 清洗整理 → 分析出图 → 得出结论 → 改数交付**」。
 全过程可追溯（每个数字都能复现）、可撤销（逆操作日志 + 版本快照）、会反省（三层反思闭环）。
 
