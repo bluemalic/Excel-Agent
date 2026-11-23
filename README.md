@@ -12,6 +12,8 @@
 ![Mem0](https://img.shields.io/badge/Mem0-2.2-6C4AE2?style=flat-square)
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
 
+本项目作为专业实习的课设答辩项目
+
 上传或选择一份表格，用中文对话完成「**看清数据 → 清洗整理 → 分析出图 → 得出结论 → 改数交付**」。
 全过程可追溯（每个数字都能复现）、可撤销（逆操作日志 + 版本快照）、会反省（三层反思闭环）。
 
